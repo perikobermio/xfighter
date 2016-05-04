@@ -23,7 +23,7 @@
         //imagenak karga
         std::string space = "./../img/space.png";
         SDL_Texture* tSpace = _ren.loadImages(space, ren);
-        std::string nave = "./../img/ships/p1/p0.png";
+        std::string nave = "./../img/ships/p1/sprite.png";
         SDL_Texture* tNave = _ren.loadImages(nave, ren);
 
         while(aktibo) {
@@ -49,9 +49,11 @@
 
             if(LEFT) {
                 cP1.x -= cP1.v;
+                cP1.aSpr = cP1.sprL5;
             }
             if(RIGHT) {
                 cP1.x += cP1.v;
+                cP1.aSpr = cP1.sprR5;
             }
             if(UP) {
                 cP1.y -= cP1.v;
@@ -59,10 +61,14 @@
             if(DOWN) {
                 cP1.y += cP1.v;
             }
+            if(!LEFT && !RIGHT && !UP && !DOWN) {
+                cP1.aSpr = cP1.spr0;
+            }
+
 
             SDL_RenderClear(ren);
-            _ren.renderTexture(tSpace, ren, 0, 0, SCREEN_W, SCREEN_H); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
-            _ren.renderTexture(tNave, ren, cP1.x, cP1.y, 87, 80); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
+            _ren.renderTexture(tSpace, ren, SDL_Rect {0,0,SCREEN_W,SCREEN_H}, 0, 0, SCREEN_W, SCREEN_H); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
+            _ren.renderTexture(tNave, ren, cP1.aSpr, cP1.x, cP1.y, cP1.w, cP1.h); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
             SDL_RenderPresent(ren);
         }
 
