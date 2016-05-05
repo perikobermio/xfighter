@@ -10,6 +10,7 @@ class player {
             SDL_Rect sprR5  = {435, 0,  87, 80};
             SDL_Rect sprL5  = {435, 80, 87, 80};
             SDL_Rect aSpr;
+            int fireType = 0;
             int x = 500;
             int y = 650;
             int h = 87;
@@ -40,8 +41,8 @@ class player {
             }
         }
 
-        void moveFire(player::fire &vFire) {
-
+        void moveFire(player::fire &fire) {
+            fire.y = fire.y - fire.v;
         }
 
         void drawFires(SDL_Renderer *ren) {
