@@ -83,7 +83,10 @@ class player {
         }
 
         void detectP1OutRange(player::p1 &cP1) {
-
+            if(cP1.x < 0) cP1.x = 0;
+            if(cP1.x + cP1.w > SCREEN_W) cP1.x = SCREEN_W - cP1.w;
+            if(cP1.y < 0) cP1.y = 0;
+            if(cP1.y + cP1.h > SCREEN_H) cP1.y = SCREEN_H - cP1.h;
         }
 
 };
