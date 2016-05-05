@@ -6,9 +6,12 @@ class render {
         SDL_Window *screen;
 
     public:
+        SDL_Renderer *ren;
+
         SDL_Renderer* createScreen(const int SCREEN_W, const int SCREEN_H) {
             render::screen = SDL_CreateWindow("xfighter", 0, 0, SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
             SDL_Renderer *render = SDL_CreateRenderer(render::screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            render::ren = render;
             return render;
         }
 

@@ -41,7 +41,7 @@ class player {
         }
 
         void moveFire(player::fire &vFire) {
-
+            vFire
         }
 
         void drawFires(SDL_Renderer *ren) {
