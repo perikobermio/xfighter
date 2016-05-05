@@ -1,0 +1,2 @@
+const int SCREEN_W = 1024;
+const int SCREEN_H = 768;

@@ -2,8 +2,6 @@
 #define player_h
 
 class player {
-    private:
-
     public:
         struct p1 {
             SDL_Rect spr0   = {0,   0,  87, 80};
@@ -30,6 +28,28 @@ class player {
             return p;
         }
 
+        void moveP1(bool LEFT, bool RIGHT, bool UP, bool DOWN, player::p1 &cP1) {
+            if(LEFT) {
+                cP1.x -= cP1.v;
+                cP1.aSpr = cP1.sprL5;
+            }
+            if(RIGHT) {
+                cP1.x += cP1.v;
+                cP1.aSpr = cP1.sprR5;
+            }
+            if(UP) {
+                cP1.y -= cP1.v;
+            }
+            if(DOWN) {
+                cP1.y += cP1.v;
+            }
+            if(!LEFT && !RIGHT && !UP && !DOWN) {
+                cP1.aSpr = cP1.spr0;
+            }
+
+            detectP1OutRange(cP1);
+        }
+
         void createFire(int type, int x, int y, int w, int h) {
             int v, cad;
             switch(type) {
@@ -41,18 +61,29 @@ class player {
             }
         }
 
-        void moveFire(player::fire &fire) {
-            fire.y = fire.y - fire.v;
-        }
-
         void drawFires(SDL_Renderer *ren) {
             for(int i=0; i<vFire.size();i++) {
-                moveFire(vFire[i]);
                 SDL_Rect dst = {vFire[i].x, vFire[i].y, vFire[i].w, vFire[i].h};
                 SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
                 SDL_RenderFillRect(ren, &dst);
+                moveFire(vFire[i], i);
             }
-            //vFire.erase(vFire.begin()+1);
+        }
+
+    private:
+        void moveFire(player::fire &fire, int i) {
+            fire.y = fire.y - fire.v;
+            detectOutRange(fire, i);
+        }
+
+        void detectOutRange(player::fire &fire, int i) {
+            if(fire.y < 0 || fire.y > SCREEN_H || fire.x < 0 || fire.x > SCREEN_W) {
+                vFire.erase(vFire.begin()+i);
+            }
+        }
+
+        void detectP1OutRange(player::p1 &cP1) {
+
         }
 
 };

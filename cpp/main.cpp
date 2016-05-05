@@ -1,13 +1,17 @@
-
     #include <iostream>
     #include <vector>
+    #include "constants"
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_image.h>
     #include "render.h"
     #include "player.h"
 
-    const int SCREEN_W = 1024;
-    const int SCREEN_H = 768;
+
+    void drawScene(SDL_Texture* tSpace, SDL_Texture* tNave, player::p1 cP1);
+
+    render _ren;
+    player _player;
+    SDL_Renderer *ren;
 
     int main() {
         bool UP=false, DOWN=false, RIGHT=false, LEFT=false, FIRE=false;
@@ -15,12 +19,9 @@
         int frametime;
         SDL_Event e;
 
-        render _ren;
-        player _player;
-
-        SDL_Renderer *ren = _ren.createScreen(SCREEN_W, SCREEN_H);
-
+        ren = _ren.createScreen(SCREEN_W, SCREEN_H);
         player::p1 cP1 = _player.getP1(); //hamen dakotez playerran dato danak
+
         //imagenak karga
         std::string space = "./../img/space.png";
         SDL_Texture* tSpace = _ren.loadImages(space, ren);
@@ -37,7 +38,7 @@
                         case SDLK_LEFT:     LEFT    = true;     break;
                         case SDLK_UP:       UP      = true;     break;
                         case SDLK_DOWN:     DOWN    = true;     break;
-                        case SDLK_SPACE:    FIRE   = true;     break;
+                        case SDLK_SPACE:    FIRE    = true;     break;
                     }
                 } if(e.type == SDL_KEYUP) {
                     switch(e.key.keysym.sym) {
@@ -45,7 +46,7 @@
                         case SDLK_LEFT:     LEFT    = false;     break;
                         case SDLK_UP:       UP      = false;     break;
                         case SDLK_DOWN:     DOWN    = false;     break;
-                        case SDLK_SPACE:    FIRE   = false;     break;
+                        case SDLK_SPACE:    FIRE    = false;     break;
                     }
                 }
 
@@ -55,37 +56,25 @@
             frametime = SDL_GetTicks() - frametime;
             if(frametime < 10)SDL_Delay(Uint32(10-frametime));
 
-            if(LEFT) {
-                cP1.x -= cP1.v;
-                cP1.aSpr = cP1.sprL5;
-            }
-            if(RIGHT) {
-                cP1.x += cP1.v;
-                cP1.aSpr = cP1.sprR5;
-            }
-            if(UP) {
-                cP1.y -= cP1.v;
-            }
-            if(DOWN) {
-                cP1.y += cP1.v;
-            }
             if(FIRE) {
-                _player.createFire(0, cP1.x, cP1.y, cP1.w, cP1.h);
+                _player.createFire(cP1.fireType, cP1.x, cP1.y, cP1.w, cP1.h);
             }
 
-            if(!LEFT && !RIGHT && !UP && !DOWN) {
-                cP1.aSpr = cP1.spr0;
-            }
+            _player.moveP1(LEFT, RIGHT, UP, DOWN, cP1);
 
-
-            SDL_RenderClear(ren);
-            _ren.renderTexture(tSpace, ren, SDL_Rect {0,0,SCREEN_W,SCREEN_H}, 0, 0, SCREEN_W, SCREEN_H); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
-            _player.drawFires(ren);
-            _ren.renderTexture(tNave, ren, cP1.aSpr, cP1.x, cP1.y, cP1.w, cP1.h); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
-
-            SDL_RenderPresent(ren);
+            drawScene(tSpace, tNave, cP1); //escena dana pintzeteko RENDERIZETEKO
         }
 
         _ren.destroyEverything(tSpace, tNave, ren);
         return 0;
+    }
+
+    void drawScene(SDL_Texture* tSpace, SDL_Texture* tNave, player::p1 cP1) {
+        SDL_RenderClear(ren);
+
+        _ren.renderTexture(tSpace, ren, SDL_Rect {0,0,SCREEN_W,SCREEN_H}, 0, 0, SCREEN_W, SCREEN_H); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
+        _player.drawFires(ren);
+        _ren.renderTexture(tNave, ren, cP1.aSpr, cP1.x, cP1.y, cP1.w, cP1.h); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
+
+        SDL_RenderPresent(ren);
     }
