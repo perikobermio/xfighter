@@ -14,10 +14,12 @@ class player {
             int h = 87;
             int w = 80;
             int v = 5;
+            int cad = 40;
+            int tmpFire = 0;
         };
 
         struct fire {
-            int type, x, y, w, h, v, cad;
+            int type, x, y, w, h, v;
         };
         std::vector<fire> vFire;
 
@@ -50,15 +52,16 @@ class player {
             detectP1OutRange(cP1);
         }
 
-        void createFire(int type, int x, int y, int w, int h) {
+        int createFire(player::p1 cP1) {
             int v, cad;
-            switch(type) {
+            switch(cP1.fireType) {
                 case 0:
-                    w = 3; h = 20; v = 15; cad = 2;
-                    vFire.push_back(fire({type,x+20,y,w,h,v,cad}));
-                    vFire.push_back(fire({type,x+55,y,w,h,v,cad}));
+                    cP1.w = 3; cP1.h = 20; v = 3;
+                    vFire.push_back(fire({0,cP1.x+20,cP1.y,cP1.w,cP1.h,v}));
+                    vFire.push_back(fire({0,cP1.x+55,cP1.y,cP1.w,cP1.h,v}));
                 break;
             }
+            return 1;
         }
 
         void drawFires(SDL_Renderer *ren) {
@@ -69,6 +72,20 @@ class player {
                 moveFire(vFire[i], i);
             }
         }
+        
+        int cadenceControl(player::p1 &cP1, bool fire) {
+			if(cP1.tmpFire != 0 && cP1.tmpFire <= cP1.cad) {
+				cP1.tmpFire = cP1.tmpFire+1;
+				return false;
+			} else if(cP1.tmpFire == 0 && fire) {
+				cP1.tmpFire = cP1.tmpFire+1;
+				return true;
+			} else if(cP1.tmpFire > cP1.cad) {
+				cP1.tmpFire = 0;
+				return true;
+			}
+			return false;
+		}
 
     private:
         void moveFire(player::fire &fire, int i) {

@@ -23,9 +23,9 @@
         player::p1 cP1 = _player.getP1(); //hamen dakotez playerran dato danak
 
         //imagenak karga
-        std::string space = "../img/space.png";
+        std::string space = "./img/space.png";
         SDL_Texture* tSpace = _ren.loadImages(space, ren);
-        std::string nave = "../img/ships/p1/sprite.png";
+        std::string nave = "./img/ships/p1/sprite.png";
         SDL_Texture* tNave = _ren.loadImages(nave, ren);
 
         while(aktibo) {
@@ -56,13 +56,11 @@
             frametime = SDL_GetTicks() - frametime;
             if(frametime < 10)SDL_Delay(Uint32(10-frametime));
 
+            if(FIRE) {
+                _player.createFire(cP1.fireType, cP1.x, cP1.y, cP1.w, cP1.h);
+            }
 
-			_player.moveP1(LEFT, RIGHT, UP, DOWN, cP1);
-			bool canFire = _player.cadenceControl(cP1, FIRE);
-			
-            if(FIRE && canFire) {
-                _player.createFire(cP1);
-            }            
+            _player.moveP1(LEFT, RIGHT, UP, DOWN, cP1);
 
             drawScene(tSpace, tNave, cP1); //escena dana pintzeteko RENDERIZETEKO
         }
