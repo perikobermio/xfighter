@@ -15,7 +15,7 @@ class background {
             SDL_Texture* tSpace = _ren.loadImages(space, ren);
             int w, h;
             SDL_QueryTexture(tSpace, NULL, NULL, &w, &h);
-            vBack.push_back(back({tSpace,0,0,0,w,h,1}));
+            vBack.push_back(back({tSpace,0,0,h-SCREEN_H,w,h,1}));
 
             return background::vBack;
         }
@@ -33,9 +33,9 @@ class background {
             render _ren;
 
             void moveBackground(int i) {
-                vBack[i].y += 1;
-                if(vBack[i].y >= vBack[i].h - SCREEN_H)
-                    vBack[i].y = 0;
+                vBack[i].y -= 1;
+                if(vBack[i].y <= 0)
+                    vBack[i].y = vBack[i].h - SCREEN_H;
             }
 };
 
