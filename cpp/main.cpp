@@ -4,10 +4,8 @@
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_image.h>
     #include "render.h"
+    #include "background.h"
     #include "player.h"
-
-
-    void drawScene(SDL_Texture* tSpace, SDL_Texture* tNave, player::p1 cP1);
 
     render _ren;
     player _player;
@@ -21,10 +19,10 @@
 
         ren = _ren.createScreen(SCREEN_W, SCREEN_H);
         player::p1 cP1 = _player.getP1(); //hamen dakotez playerran dato danak
+        background _background;
 
         //imagenak karga
-        std::string space = "../img/space.png";
-        SDL_Texture* tSpace = _ren.loadImages(space, ren);
+        std::vector<background::back> vBack = _background.getBackgrounds(ren);
         std::string nave = "../img/ships/p1/sprite.png";
         SDL_Texture* tNave = _ren.loadImages(nave, ren);
 
@@ -34,18 +32,18 @@
                 if(e.type == SDL_KEYDOWN) { //teklarik sakatu badan beituten dau
                     switch(e.key.keysym.sym) {
                         case SDLK_ESCAPE:   aktibo  = false;    break;
-                        case SDLK_RIGHT:    RIGHT   = true;     break;
-                        case SDLK_LEFT:     LEFT    = true;     break;
-                        case SDLK_UP:       UP      = true;     break;
-                        case SDLK_DOWN:     DOWN    = true;     break;
+                        case SDLK_d:        RIGHT   = true;     break;
+                        case SDLK_a:        LEFT    = true;     break;
+                        case SDLK_w:        UP      = true;     break;
+                        case SDLK_s:        DOWN    = true;     break;
                         case SDLK_SPACE:    FIRE    = true;     break;
                     }
                 } if(e.type == SDL_KEYUP) {
                     switch(e.key.keysym.sym) {
-                        case SDLK_RIGHT:    RIGHT   = false;     break;
-                        case SDLK_LEFT:     LEFT    = false;     break;
-                        case SDLK_UP:       UP      = false;     break;
-                        case SDLK_DOWN:     DOWN    = false;     break;
+                        case SDLK_d:        RIGHT   = false;     break;
+                        case SDLK_a:        LEFT    = false;     break;
+                        case SDLK_w:        UP      = false;     break;
+                        case SDLK_s:        DOWN    = false;     break;
                         case SDLK_SPACE:    FIRE    = false;     break;
                     }
                 }
@@ -64,19 +62,15 @@
                 _player.createFire(cP1);
             }            
 
-            drawScene(tSpace, tNave, cP1); //escena dana pintzeteko RENDERIZETEKO
+            //renderize dana
+            SDL_RenderClear(ren);
+            _background.drawBackground(ren);
+            _player.drawFires(ren);
+            _ren.renderTexture(tNave, ren, cP1.aSpr, SDL_Rect {cP1.x, cP1.y, cP1.w, cP1.h});
+            SDL_RenderPresent(ren);
+
         }
 
-        _ren.destroyEverything(tSpace, tNave, ren);
+        _ren.destroyEverything(vBack[0].img, tNave, ren);
         return 0;
-    }
-
-    void drawScene(SDL_Texture* tSpace, SDL_Texture* tNave, player::p1 cP1) {
-        SDL_RenderClear(ren);
-
-        _ren.renderTexture(tSpace, ren, SDL_Rect {0,0,SCREEN_W,SCREEN_H}, 0, 0, SCREEN_W, SCREEN_H); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
-        _player.drawFires(ren);
-        _ren.renderTexture(tNave, ren, cP1.aSpr, cP1.x, cP1.y, cP1.w, cP1.h); //imagena imintzen dau diñotzagun pixelatan, imagenan neurri originalakaz
-
-        SDL_RenderPresent(ren);
     }

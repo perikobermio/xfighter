@@ -14,7 +14,7 @@ class player {
             int h = 87;
             int w = 80;
             int v = 5;
-            int cad = 40;
+            int cad = 10;
             int tmpFire = 0;
         };
 
@@ -56,7 +56,7 @@ class player {
             int v, cad;
             switch(cP1.fireType) {
                 case 0:
-                    cP1.w = 3; cP1.h = 20; v = 3;
+                    cP1.w = 3; cP1.h = 20; v = 15;
                     vFire.push_back(fire({0,cP1.x+20,cP1.y,cP1.w,cP1.h,v}));
                     vFire.push_back(fire({0,cP1.x+55,cP1.y,cP1.w,cP1.h,v}));
                 break;
@@ -82,7 +82,7 @@ class player {
 				return true;
 			} else if(cP1.tmpFire > cP1.cad) {
 				cP1.tmpFire = 0;
-				return true;
+                return false;
 			}
 			return false;
 		}

@@ -32,8 +32,7 @@ class render {
             SDL_Quit();
         }
 
-        void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect spr, int x, int y, int w, int h) {
-            SDL_Rect dst = {x, y, w, h};
+        void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect spr, SDL_Rect dst) {
             SDL_RenderCopy(ren, tex, &spr, &dst);
         }
 };
