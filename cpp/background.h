@@ -34,10 +34,15 @@ class background {
 
         private:
             render _ren;
+            int ralentizador = 0;
 
             void moveBackground() {
-                vBack[0].y += 1;
-                if(vBack[0].y >= vBack[0].h) vBack[0].y = 0;
+				if(ralentizador == 3) {
+					ralentizador = 0;
+					vBack[0].y += vBack[0].v;
+					if(vBack[0].y >= vBack[0].h) vBack[0].y = 0;
+				}
+				++ralentizador;
             }
 };
 
