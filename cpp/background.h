@@ -15,27 +15,29 @@ class background {
             SDL_Texture* tSpace = _ren.loadImages(space, ren);
             int w, h;
             SDL_QueryTexture(tSpace, NULL, NULL, &w, &h);
-            vBack.push_back(back({tSpace,0,0,h-SCREEN_H,w,h,1}));
+            vBack.push_back(back({tSpace,0,0,0,w,h,1}));
 
             return background::vBack;
         }
 
         void drawBackground(SDL_Renderer *ren) {
-            for(int i=0; i<vBack.size();i++) {
-                SDL_Rect spr = {vBack[i].x,vBack[i].y,SCREEN_W,SCREEN_H};
-                SDL_Rect dst = {0,0,SCREEN_W,SCREEN_H};
-                SDL_RenderCopy(ren, vBack[i].img, &spr, &dst);
-                moveBackground(i);
-            }
+			moveBackground();
+			SDL_Rect spr = {0,0,vBack[0].w,vBack[0].h};
+			SDL_Rect dst = {0,vBack[0].y,vBack[0].w,vBack[0].h};
+			SDL_RenderCopy(ren, vBack[0].img, &spr, &dst);
+			
+			spr = {0,0,vBack[0].w,vBack[0].h};
+			dst = {0,vBack[0].y-vBack[0].h,vBack[0].w,vBack[0].h};
+			SDL_RenderCopy(ren, vBack[0].img, &spr, &dst);
+    
         }
 
         private:
             render _ren;
 
-            void moveBackground(int i) {
-                vBack[i].y -= 1;
-                if(vBack[i].y <= 0)
-                    vBack[i].y = vBack[i].h - SCREEN_H;
+            void moveBackground() {
+                vBack[0].y += 1;
+                if(vBack[0].y >= vBack[0].h) vBack[0].y = 0;
             }
 };
 
