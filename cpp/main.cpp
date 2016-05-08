@@ -6,6 +6,7 @@
     #include "render.h"
     #include "background.h"
     #include "player.h"
+    #include "badBoss.h"
 
     render _ren;
     player _player;
@@ -20,9 +21,11 @@
         ren = _ren.createScreen(SCREEN_W, SCREEN_H);
         player::p1 cP1 = _player.getP1(); //hamen dakotez playerran dato danak
         background _background;
+        badBoss _badBoss;
 
         //imagenak karga
         std::vector<background::back> vBack = _background.getBackgrounds(ren);
+        _badBoss.loadBosses(ren);
         std::string nave = "../img/ships/p1/sprite.png";
         SDL_Texture* tNave = _ren.loadImages(nave, ren);
 
@@ -36,7 +39,7 @@
                         case SDLK_a:        LEFT    = true;     break;
                         case SDLK_w:        UP      = true;     break;
                         case SDLK_s:        DOWN    = true;     break;
-                        case SDLK_SPACE:    FIRE    = true;     break;
+                        case SDLK_RCTRL:    FIRE    = true;     break;
                     }
                 } if(e.type == SDL_KEYUP) {
                     switch(e.key.keysym.sym) {
@@ -44,7 +47,7 @@
                         case SDLK_a:        LEFT    = false;     break;
                         case SDLK_w:        UP      = false;     break;
                         case SDLK_s:        DOWN    = false;     break;
-                        case SDLK_SPACE:    FIRE    = false;     break;
+                        case SDLK_RCTRL:    FIRE    = false;     break;
                     }
                 }
 
@@ -65,6 +68,7 @@
             //renderize dana
             SDL_RenderClear(ren);
             _background.drawBackground(ren);
+            _badBoss.drawBoss(ren);
             _player.drawFires(ren);
             _ren.renderTexture(tNave, ren, cP1.aSpr, SDL_Rect {cP1.x, cP1.y, cP1.w, cP1.h});
             SDL_RenderPresent(ren);
