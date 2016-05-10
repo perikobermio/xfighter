@@ -7,26 +7,27 @@ class badBoss {
 		SDL_Texture* tBad;
         SDL_Texture* tShots;
 
-        struct bBoss {
-            SDL_Rect spr = {610,640,270,300};
-            int x = SCREEN_W/2-200, y = -700;
-            int inmove = 1, move = 0, kont = 0, waitTime = 0;
-        } boss;
-
-
         /////////////
-        struct fire {
-            int type, x, y;
-            float v, vx, vy;
-            int angle;
-        };
-        std::vector<fire> vFire;
+        
         struct fireSpr {
             SDL_Rect f1 = {0,47,20,20};
         } fSpr;
 
 
     public:
+		struct bBoss {
+            SDL_Rect spr = {610,640,270,300};
+            int x = SCREEN_W/2-200, y = -700;
+            int inmove = 1, move = 0, kont = 0, waitTime = 0;
+        } boss;
+        struct fire {
+            int type, x, y;
+            float v, vx, vy;
+            int angle;
+        };
+        std::vector<fire> vFire;
+        
+    
 		void loadBosses(SDL_Renderer *ren) {
 			std::string bad = "../img/ships/bad/badSprite.png";
             tBad = _ren.loadImages(bad, ren);
@@ -50,10 +51,20 @@ class badBoss {
             drawFires(ren);
 		}
 		
+		bBoss getBoss() {
+			return boss;
+		}
+		std::vector<fire> getFire() {
+			return vFire;
+		}
+		
     private:
 
         void drawFires(SDL_Renderer *ren) {
             for(int i=0; i<vFire.size();i++) {
+				if(vFire[i].x + fSpr.f1.w > SCREEN_W || vFire[i].y + fSpr.f1.h > SCREEN_H) 
+					vFire.erase(vFire.begin()+i);
+				
                 float x2 = vFire[i].x + vFire[i].vx;
                 float y2 = vFire[i].y + vFire[i].vy;
                 vFire[i].x = (int)x2;
@@ -82,6 +93,7 @@ class badBoss {
                         boss.move = 2;
                         boss.inmove = 0;
                         boss.waitTime = 40;
+                        bossFires(0);
 					}
 				break;
 				
@@ -91,6 +103,7 @@ class badBoss {
                         boss.move = 1;
                         boss.inmove = 0;
                         boss.waitTime = 40;
+                        bossFires(0);
 					}
 				break;
 			}

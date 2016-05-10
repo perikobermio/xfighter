@@ -8,6 +8,7 @@
     #include "background.h"
     #include "player.h"
     #include "badBoss.h"
+    #include "colision.h"
 
     render _ren;
     player _player;
@@ -23,6 +24,7 @@
         player::p1 cP1 = _player.getP1(); //hamen dakotez playerran dato danak
         background _background;
         badBoss _badBoss;
+        colision _colision;
 
         //imagenak karga
         std::vector<background::back> vBack = _background.getBackgrounds(ren);
@@ -64,7 +66,9 @@
 			
             if(FIRE && canFire) {
                 _player.createFire(cP1);
-            }            
+            }
+            
+            _colision.detectColision();       
 
             //renderize dana
             SDL_RenderClear(ren);

@@ -29,6 +29,10 @@ class player {
             p.aSpr = p.spr0;
             return p;
         }
+        
+        std::vector<fire> getFire() {
+            return vFire;
+        }
 
         void moveP1(bool LEFT, bool RIGHT, bool UP, bool DOWN, player::p1 &cP1) {
             if(LEFT) {
