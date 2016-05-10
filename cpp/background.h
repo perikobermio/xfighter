@@ -76,8 +76,6 @@ class background {
                 int i = 1 + (rand() % (int)(4 - 1 + 1));
                 int wh = 200 + (rand() % (int)(1000 - 200 + 1));
                 int x = (-wh+5) + (rand() % (int)((SCREEN_W-5) - (-wh+5) + 1));
-                std::cout << wh << "-";
-
 
 				int v = 2;
 				if(wh>600) v=3; if(wh<400) v=1;

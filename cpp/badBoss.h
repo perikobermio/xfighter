@@ -6,19 +6,24 @@ class badBoss {
 		render _ren;
 		SDL_Texture* tBad;
         SDL_Texture* tShots;
-		SDL_Rect spr = {610,640,270,300};
-		int x = SCREEN_W/2-200, y = -700;
-		
-		int move = 0, kont = 0, waitTime = 0;
-		int inmove = 1;
+
+        struct bBoss {
+            SDL_Rect spr = {610,640,270,300};
+            int x = SCREEN_W/2-200, y = -700;
+            int inmove = 1, move = 0, kont = 0, waitTime = 0;
+        } boss;
 
 
         /////////////
-        struct fire {int type, x, y, x2, h2, v;};
+        struct fire {
+            int type, x, y;
+            float v, vx, vy;
+            int angle;
+        };
+        std::vector<fire> vFire;
         struct fireSpr {
             SDL_Rect f1 = {0,47,20,20};
         } fSpr;
-        std::vector<fire> vFire;
 
 
     public:
@@ -28,62 +33,94 @@ class badBoss {
 
             std::string shots = "../img/shot/shots.png";
             tShots = _ren.loadImages(shots, ren);
-            //vFire.push_back(fire({0,0,0,50,50,10}));
 		}
     
 		void drawBoss(SDL_Renderer *ren) {
-            drawFires(ren);
-			if(inmove) bossMovements(move);
+            if(boss.inmove) bossMovements(boss.move);
 			else {
-				++kont;
-				if(kont>=waitTime) {
-					inmove = 1;
-					kont = 0;
+                ++boss.kont;
+                if(boss.kont>=boss.waitTime) {
+                    boss.inmove = 1;
+                    boss.kont = 0;
 				}
 			}
 			
-			SDL_Rect dst = {x,y,400,550};
-			SDL_RenderCopy(ren, tBad, &spr, &dst);
+            SDL_Rect dst = {boss.x,boss.y,400,550};
+            SDL_RenderCopy(ren, tBad, &boss.spr, &dst);
+            drawFires(ren);
 		}
 		
     private:
 
         void drawFires(SDL_Renderer *ren) {
-            SDL_Rect dst = {0,0,fSpr.f1.w,fSpr.f1.h};
-            SDL_RenderCopy(ren, tShots, &fSpr.f1, &dst);
+            for(int i=0; i<vFire.size();i++) {
+                float x2 = vFire[i].x + vFire[i].vx;
+                float y2 = vFire[i].y + vFire[i].vy;
+                vFire[i].x = (int)x2;
+                vFire[i].y = (int)y2;
+
+                SDL_Rect dst = {(int)x2,(int)y2,fSpr.f1.w,fSpr.f1.h};
+                SDL_RenderCopy(ren, tShots, &fSpr.f1, &dst);
+            }
         }
        
 		void bossMovements(int muf) {
 			switch(muf) {
 				case 0:
-					if(y<-150) y += 1;
+                    if(boss.y<-150) boss.y += 1;
 					else {
-						move = 1;
-						inmove = 0;
-                        waitTime = 120;
+                        boss.move = 1;
+                        boss.inmove = 0;
+                        boss.waitTime = 120;
+                        bossFires(0);
 					}
 				break;
 				
 				case 1:
-					if(x>=0) x -= 2;
+                    if(boss.x>=0) boss.x -= 2;
 					else {
-						move = 2;
-						inmove = 0;
-                        waitTime = 40;
+                        boss.move = 2;
+                        boss.inmove = 0;
+                        boss.waitTime = 40;
 					}
 				break;
 				
 				case 2:
-					if(x<=SCREEN_W-400) x += 2;
+                    if(boss.x<=SCREEN_W-400) boss.x += 2;
 					else {
-						move = 1;
-						inmove = 0;
-                        waitTime = 40;
+                        boss.move = 1;
+                        boss.inmove = 0;
+                        boss.waitTime = 40;
 					}
 				break;
 			}
 			
 		}
+
+        void bossFires(int type) {
+            switch(type) {
+                case 0:
+                    int x = boss.x + (boss.spr.w/2);
+                    int y = boss.y + boss.spr.h;
+
+                    vFire.push_back(fire({0,x,y,7,7,0,20}));
+                    vFire.push_back(fire({0,x,y,7,7,0,40}));
+                    vFire.push_back(fire({0,x,y,7,7,0,60}));
+                    vFire.push_back(fire({0,x,y,7,7,0,80}));
+                    vFire.push_back(fire({0,x,y,7,7,0,100}));
+                    vFire.push_back(fire({0,x,y,7,7,0,120}));
+                    vFire.push_back(fire({0,x,y,7,7,0,140}));
+                    vFire.push_back(fire({0,x,y,7,7,0,160}));
+
+                    for(int i=0; i<vFire.size();i++) {
+                        vFire[i].v = sqrt(vFire[i].vx*vFire[i].vx + vFire[i].vy*vFire[i].vy);
+                        vFire[i].vy = vFire[i].v * sin(vFire[i].angle*( M_PI / 180));
+                        vFire[i].vx = vFire[i].v * cos(vFire[i].angle*( M_PI / 180));
+                    }
+                break;
+            }
+
+        }
 
 };
 
