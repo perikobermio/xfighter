@@ -26,7 +26,6 @@ class badBoss {
             int angle;
         };
         std::vector<fire> vFire;
-        
     
 		void loadBosses(SDL_Renderer *ren) {
 			std::string bad = "../img/ships/bad/badSprite.png";
@@ -54,16 +53,19 @@ class badBoss {
 		bBoss getBoss() {
 			return boss;
 		}
-		std::vector<fire> getFire() {
-			return vFire;
+        std::vector<fire> getFire() {
+            return vFire;
 		}
+        void destroyFire(int i) {
+            vFire.erase(vFire.begin()+i);
+        }
 		
     private:
 
         void drawFires(SDL_Renderer *ren) {
             for(int i=0; i<vFire.size();i++) {
-				if(vFire[i].x + fSpr.f1.w > SCREEN_W || vFire[i].y + fSpr.f1.h > SCREEN_H) 
-					vFire.erase(vFire.begin()+i);
+                if(vFire[i].x + fSpr.f1.w > SCREEN_W || vFire[i].y + fSpr.f1.h > SCREEN_H)
+                    vFire.erase(vFire.begin()+i);
 				
                 float x2 = vFire[i].x + vFire[i].vx;
                 float y2 = vFire[i].y + vFire[i].vy;
