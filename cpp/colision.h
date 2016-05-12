@@ -23,17 +23,21 @@ class colision {
             std::vector<player::fire> playerFire = _player.getFire();
 			
 			badBoss::bBoss boss = _boss.getBoss();
-            std::vector<badBoss::fire> bossFire = _boss.getFire();
+            //std::cout << _boss.lala->size() << std::endl;
+            //std::vector<badBoss::fire> bossFire = _boss.getFire();
+
+            //std::vector<badBoss::fire> lala = *_boss.pvFire;
+            //std::cout << lala.size() << std::endl;
 
             //std::cout << "-" << bossFire.size() << std::endl;
-            for(int i=0; i<bossFire.size();i++) {
+            /*for(int i=0; i<bossFire.size();i++) {
                 int tc = testColision(SDL_Rect {player.x, player.y, player.w, player.h},
                                       SDL_Rect {bossFire[i].x, bossFire[i].y, 20, 20});
                 if(tc) {
                     std::cout << "ñapu-";
                     _boss.destroyFire(i);
                 }
-            }
+            }*/
 		}
 };
 
