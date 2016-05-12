@@ -68,7 +68,8 @@
                 _player.createFire(cP1);
             }
             
-            _colision.detectColision();       
+            int katapum = _colision.detectColision(_badBoss, _player, cP1);       
+            if(katapum) aktibo = false;
 
             //renderize dana
             SDL_RenderClear(ren);
