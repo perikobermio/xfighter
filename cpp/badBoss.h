@@ -26,7 +26,6 @@ class badBoss {
             int angle;
         };
         std::vector<fire> vFire;
-        std::vector<fire> *lala = new std::vector<fire>();
     
 		void loadBosses(SDL_Renderer *ren) {
 			std::string bad = "../img/ships/bad/badSprite.png";
@@ -37,8 +36,6 @@ class badBoss {
 		}
     
 		void drawBoss(SDL_Renderer *ren) {
-            lala->push_back(fire({0,0,0,0,0,0,0}));
-            std::cout << lala->size() << std::endl;
             if(boss.inmove) bossMovements(boss.move);
 			else {
                 ++boss.kont;
@@ -52,12 +49,9 @@ class badBoss {
             SDL_RenderCopy(ren, tBad, &boss.spr, &dst);
             drawFires(ren);
 		}
-		
-		bBoss getBoss() {
-			return boss;
-		}
 
         void destroyFire(int i) {
+			std::cout << vFire[i].y << "-";
             vFire.erase(vFire.begin()+i);
         }
 		

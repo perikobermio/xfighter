@@ -47,7 +47,22 @@
             _player.move(_player.p1, RIGHT, LEFT, UP, DOWN, FIRE);
 
             frametime = SDL_GetTicks() - frametime;
+<<<<<<< HEAD
             if(frametime < 10)SDL_Delay(Uint32(10-frametime)); 
+=======
+            if(frametime < 10)SDL_Delay(Uint32(10-frametime));
+
+
+			_player.moveP1(LEFT, RIGHT, UP, DOWN, cP1);
+			bool canFire = _player.cadenceControl(cP1, FIRE);
+			
+            if(FIRE && canFire) {
+                _player.createFire(cP1);
+            }
+            
+            int katapum = _colision.detectColision(_badBoss, _player, cP1);       
+            if(katapum) aktibo = false;
+>>>>>>> 2b2aafe9696dd8768b6f58f01eca97c7737c3142
 
             SDL_RenderClear(_ren.ren);
 			_player.drawPlayer(_ren.ren, _player.p1);
