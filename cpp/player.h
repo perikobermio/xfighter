@@ -20,9 +20,8 @@ class player {
 			if(R) {
 				if(ply.v <= ply.vmax) {
 					ply.v = ply.v + ply.a;
+					if(ply.v > ply.vmax) ply.v = ply.vmax;
 					ply.x += ply.v;
-				} else {
-					ply.x += ply.vmax;
 				}
 			} else {
 				if(ply.v >= 0) {
@@ -31,20 +30,21 @@ class player {
 				}
 			}
 			
-			
-			if(L) {
-				if(ply.v <= ply.vmax) {
-					ply.v = ply.v + ply.a;
-					ply.x -= ply.v;
-				} else {
-					ply.x -= ply.vmax;
+			/*else {
+				if(ply.v >= 0) {
+					ply.v = ply.v - ply.a;
+					ply.x += ply.v;
 				}
-			} else {
+			}*/
+			
+			
+			
+			/*else {
 				if(ply.v >= 0) {
 					ply.v = ply.v - ply.a;
 					ply.x -= ply.v;
 				}
-			}
+			}*/
 			
 			
 		}
