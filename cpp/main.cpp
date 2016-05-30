@@ -44,7 +44,7 @@
 
             }
             //MOVEMENTS
-            _player.move(_player.p1, RIGHT, LEFT, UP, DOWN, FIRE);
+            _player.move(_player.p1, RIGHT, LEFT, UP, DOWN);
 
             frametime = SDL_GetTicks() - frametime;
             if(frametime < 10)SDL_Delay(Uint32(10-frametime)); 
