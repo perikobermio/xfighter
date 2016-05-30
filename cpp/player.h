@@ -12,6 +12,12 @@ class player {
 			int w=30,h=30;
 		} p1;
 		
+		struct fire {
+			double x=200,y=200;
+			double a=0.6,vx=0,vy=0,vmax=10;
+			int w=5,h=10;
+		};
+		vector<fire> vFire;
 		
 		
 		

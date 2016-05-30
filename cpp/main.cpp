@@ -6,6 +6,8 @@
     #include <SDL2/SDL_image.h>
     #include "render.h"
     #include "player.h"
+    
+    using namespace std;
 
     int main() {
 		
@@ -26,19 +28,19 @@
                 if(e.type == SDL_KEYDOWN) {
                     switch(e.key.keysym.sym) {
                         case SDLK_ESCAPE:   running = false;    break;
-                        case SDLK_d:        RIGHT   = true;     break;
-                        case SDLK_a:        LEFT    = true;     break;
-                        case SDLK_w:        UP      = true;     break;
-                        case SDLK_s:        DOWN    = true;     break;
-                        case SDLK_RCTRL:    FIRE    = true;     break;
+                        case 1073741918:    RIGHT   = true;     break;
+                        case 1073741916:    LEFT    = true;     break;
+                        case 1073741920:    UP      = true;     break;
+                        case 1073741917:    DOWN    = true;     break;
+                        case SDLK_LCTRL:    FIRE    = true;     break;
                     }
                 } if(e.type == SDL_KEYUP) {
                     switch(e.key.keysym.sym) {
-                        case SDLK_d:        RIGHT   = false;     break;
-                        case SDLK_a:        LEFT    = false;     break;
-                        case SDLK_w:        UP      = false;     break;
-                        case SDLK_s:        DOWN    = false;     break;
-                        case SDLK_RCTRL:    FIRE    = false;     break;
+                        case 1073741918:    RIGHT   = false;     break;
+                        case 1073741916:    LEFT    = false;     break;
+                        case 1073741920:    UP      = false;     break;
+                        case 1073741917:    DOWN    = false;     break;
+                        case SDLK_LCTRL:    FIRE    = false;     break;
                     }
                 }
 
