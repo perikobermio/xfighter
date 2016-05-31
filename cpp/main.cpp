@@ -1,5 +1,6 @@
     #include <iostream>
     #include <vector>
+    #include <time.h>
     #include <math.h>
     #include "constants"
     #include <SDL2/SDL.h>
@@ -20,6 +21,7 @@
         SDL_Event e;
         
         _ren.createScreen(SCREEN_W, SCREEN_H);
+
 
         while(running) {
             frametime = SDL_GetTicks();
@@ -47,6 +49,7 @@
             }
             //MOVEMENTS
             _player.move(_player.p1, RIGHT, LEFT, UP, DOWN);
+            _player.fire(_player, FIRE);
 
             frametime = SDL_GetTicks() - frametime;
             if(frametime < 10)SDL_Delay(Uint32(10-frametime)); 
