@@ -22,7 +22,6 @@
         
         _ren.createScreen(SCREEN_W, SCREEN_H);
 
-
         while(running) {
             frametime = SDL_GetTicks();
             while(SDL_PollEvent(&e)){
@@ -47,15 +46,15 @@
                 }
 
             }
-            //MOVEMENTS
-            _player.move(_player.p1, RIGHT, LEFT, UP, DOWN);
+            //PLAYER
             _player.fire(_player, FIRE);
+            _player.move(_player, RIGHT, LEFT, UP, DOWN);
 
             frametime = SDL_GetTicks() - frametime;
             if(frametime < 10)SDL_Delay(Uint32(10-frametime)); 
 
             SDL_RenderClear(_ren.ren);
-			_player.drawPlayer(_ren.ren, _player.p1);
+			_player.draw(_ren.ren, _player);
             SDL_RenderPresent(_ren.ren);
 
         }
