@@ -10,11 +10,12 @@ class player {
 			double x=200,y=200;
 			double a=0.2,vx=0,vy=0,vmax=10;
 			int w=30,h=30,fireType=1;
-			Uint32 cad = 1000, t = SDL_GetTicks();
+			Uint32 cad = 300, t = 0;
 		} p1;
 		
 		struct pFire {
 			double x,y,v;
+			int tipo;
 		};
 		vector<pFire> vFire;
 		
@@ -90,21 +91,18 @@ void player::movePlayer(p &ply, bool R, bool L, bool U, bool D) {
 
 void player::moveFire(vector<pFire> &fire) {
 	for(int i=0; i<fire.size();i++) {
-		fire[i].y -= fire[i].v;
+		fire[i].y -= 30;
 	}
 }
 
-void player::fire(player &p, bool F) {
+void player::fire(player &p, bool F) {	
 	if(F) {
-		p.vFire.push_back(pFire({p.p1.x,p.p1.y,30}));
+		Uint32 tmp = SDL_GetTicks();
+		if(tmp >= p.p1.t + p.p1.cad) {
+			p.vFire.push_back(pFire({p.p1.x, p.p1.y, p.p1.fireType}));
+			p.p1.t = SDL_GetTicks();
+		}
 	}
-	
-	/*p.p1.tmpCad = SDL_GetTicks();
-	cout << p.p1.tmpCad << endl;
-	if(F) {
-		cout << "---------" << endl;
-		p.p1.tmpCad = 0;
-	}*/
 }
 
 #endif
