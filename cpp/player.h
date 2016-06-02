@@ -1,38 +1,31 @@
 #ifndef player_h
 #define player_h
-#include "playerFireTypes.h"
+#include "playerStructs.h"
 
 using namespace std;
 
-class player : public playerFireTypes {
+class player : public playerStructs {
 
 	public:
-		struct p {
-			double x=200,y=200;
-			double a=0.2,vx=0,vy=0,vmax=10;
-			int w=30,h=30,fireType=1;
-			Uint32 cad = 300, t = 0;
-		} p1;
-		
 		void move(player &p, bool R, bool L, bool U, bool D) {
 			movePlayer(p.p1, R, L, U, D);
-			moveFire(p.vFire);
+			moveFire(p.vf1);
 		}
 		void fire(player &p, bool F);
 		void draw(SDL_Renderer *_ren, player p) {
 			drawPlayer(_ren, p.p1);
-			drawFire(_ren, p.vFire);
+			drawFire(_ren, p.vf1);
 		}
 		
 	private:
 		void movePlayer(p &ply, bool R, bool L, bool U, bool D);
-		void moveFire(vector<pFire> &fire);
+		void moveFire(vector<pFire1> &fire);
 		
 		void drawPlayer(SDL_Renderer *_ren, p ply) {
 			SDL_Rect rect = {(int)ply.x,(int)ply.y,ply.w,ply.h};
 			SDL_RenderDrawRect(_ren, &rect);
 		}
-		void drawFire(SDL_Renderer *_ren, vector<pFire> fire) {
+		void drawFire(SDL_Renderer *_ren, vector<pFire1> fire) {
 			for(int i=0; i<fire.size();i++) {
 				SDL_Rect rect = {(int)fire[i].x,(int)fire[i].y,5,10};
 				SDL_RenderDrawRect(_ren, &rect);
@@ -83,7 +76,7 @@ void player::movePlayer(p &ply, bool R, bool L, bool U, bool D) {
 	proveColision(ply);
 }
 
-void player::moveFire(vector<pFire> &fire) {
+void player::moveFire(vector<pFire1> &fire) {
 	for(int i=0; i<fire.size();i++) {
 		fire[i].y -= 30;
 	}
@@ -93,9 +86,7 @@ void player::fire(player &p, bool F) {
 	if(F) {
 		Uint32 tmp = SDL_GetTicks();
 		if(tmp >= p.p1.t + p.p1.cad) {
-			switch(p.p1.fireType) {
-				case 1: p.vFire.push_back(pFire({p.p1.x, p.p1.y, 30, p.p1.fireType})); break;
-			}
+			p.createFire();
 			p.p1.t = SDL_GetTicks();
 		}
 	}
