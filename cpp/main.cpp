@@ -28,12 +28,14 @@
 				if(e.type == SDL_QUIT) running  = false;
                 if(e.type == SDL_KEYDOWN) {
                     switch(e.key.keysym.sym) {
-                        case SDLK_ESCAPE:   running = false;    break;
-                        case 1073741918:    RIGHT   = true;     break;
-                        case 1073741916:    LEFT    = true;     break;
-                        case 1073741920:    UP      = true;     break;
-                        case 1073741917:    DOWN    = true;     break;
-                        case SDLK_LCTRL:    FIRE    = true;     break;
+                        case SDLK_ESCAPE:   running = false;    					break;
+                        case SDLK_1:   		_player.changeWeapon(_player.p1, 1);   	break;
+                        case SDLK_2:   		_player.changeWeapon(_player.p1, 2);   	break;
+                        case 1073741918:    RIGHT   = true;     					break;
+                        case 1073741916:    LEFT    = true;     					break;
+                        case 1073741920:    UP      = true;     					break;
+                        case 1073741917:    DOWN    = true;     					break;
+                        case SDLK_LCTRL:    FIRE    = true;     					break;
                     }
                 } if(e.type == SDL_KEYUP) {
                     switch(e.key.keysym.sym) {

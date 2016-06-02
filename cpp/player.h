@@ -9,9 +9,12 @@ class player : public playerStructs {
 	public:
 		void move(player &p, bool R, bool L, bool U, bool D) {
 			movePlayer(p.p1, R, L, U, D);
-			moveFire(p.vf1);
+			moveFire(p);
 		}
 		void fire(player &p, bool F);
+		void changeWeapon(p &p1, int weapon) {
+			p1.fireType = weapon;
+		}
 		void draw(SDL_Renderer *_ren, player p) {
 			drawPlayer(_ren, p.p1);
 			drawFire(_ren, p.vf1);
@@ -19,7 +22,7 @@ class player : public playerStructs {
 		
 	private:
 		void movePlayer(p &ply, bool R, bool L, bool U, bool D);
-		void moveFire(vector<pFire1> &fire);
+		void moveFire(player &p);
 		
 		void drawPlayer(SDL_Renderer *_ren, p ply) {
 			SDL_Rect rect = {(int)ply.x,(int)ply.y,ply.w,ply.h};
@@ -27,7 +30,7 @@ class player : public playerStructs {
 		}
 		void drawFire(SDL_Renderer *_ren, vector<pFire1> fire) {
 			for(int i=0; i<fire.size();i++) {
-				SDL_Rect rect = {(int)fire[i].x,(int)fire[i].y,5,10};
+				SDL_Rect rect = {(int)fire[i].x,(int)fire[i].y,fire[i].w,fire[i].h};
 				SDL_RenderDrawRect(_ren, &rect);
 			}
 		}
@@ -76,9 +79,9 @@ void player::movePlayer(p &ply, bool R, bool L, bool U, bool D) {
 	proveColision(ply);
 }
 
-void player::moveFire(vector<pFire1> &fire) {
-	for(int i=0; i<fire.size();i++) {
-		fire[i].y -= 30;
+void player::moveFire(player &p) {
+	for(int i=0; i<p.vf1.size();i++) {
+		p.vf1[i].y -= 30;
 	}
 }
 

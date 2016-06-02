@@ -25,17 +25,13 @@ class playerStructs {
 	void createFire() {
 		switch(p1.fireType) {
 			case 1: vf1.push_back(pFire1({p1.x+(p1.w/2-2), p1.y, 30, 5, 10})); break;
-		}
-		
-	}
-	//moving
-	void moveFire() {
-		switch(p1.fireType) {
-			case 1:
+			case 2: 
+				vf1.push_back(pFire1({p1.x, p1.y, 30, 5, 10}));
+				vf1.push_back(pFire1({p1.x+(p1.w-5), p1.y, 30, 5, 10}));
 			break;
 		}
 		
-	}	
+	}
 };
 
 #endif
