@@ -1,9 +1,10 @@
 #ifndef player_h
 #define player_h
+#include "playerFireTypes.h"
 
 using namespace std;
 
-class player {
+class player : public playerFireTypes {
 
 	public:
 		struct p {
@@ -12,13 +13,6 @@ class player {
 			int w=30,h=30,fireType=1;
 			Uint32 cad = 300, t = 0;
 		} p1;
-		
-		struct pFire {
-			double x,y,v;
-			int tipo;
-		};
-		vector<pFire> vFire;
-		
 		
 		void move(player &p, bool R, bool L, bool U, bool D) {
 			movePlayer(p.p1, R, L, U, D);
@@ -99,7 +93,9 @@ void player::fire(player &p, bool F) {
 	if(F) {
 		Uint32 tmp = SDL_GetTicks();
 		if(tmp >= p.p1.t + p.p1.cad) {
-			p.vFire.push_back(pFire({p.p1.x, p.p1.y, p.p1.fireType}));
+			switch(p.p1.fireType) {
+				case 1: p.vFire.push_back(pFire({p.p1.x, p.p1.y, 30, p.p1.fireType})); break;
+			}
 			p.p1.t = SDL_GetTicks();
 		}
 	}
