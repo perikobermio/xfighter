@@ -1,1 +1,45 @@
-{"idcontenido": "Edukiaren IDa:","idioma": "Idiomas","txt_titulo": "Titulo","rangoAlta": "Altako data (noiztik noiz arte)"}
+[
+	{
+		"2000": [
+			{
+				"type": "1",
+				"w": "35",
+				"h": "35",
+				"move": "1"
+			}, {
+				"type": "1",
+				"w": "20",
+				"h": "20",
+				"move": "1"
+			}
+		]
+	}, {
+		"3000": [
+			{
+				"type": "1",
+				"w": "25",
+				"h": "25",
+				"move": "1"
+			}, {
+				"type": "1",
+				"w": "55",
+				"h": "55",
+				"move": "1"
+			}, {
+				"type": "1",
+				"w": "50",
+				"h": "20",
+				"move": "1"
+			}
+		]
+	}, {
+		"1000": [
+			{
+				"type": "1",
+				"w": "35",
+				"h": "35",
+				"move": "1"
+			}
+		]
+	}
+]	
