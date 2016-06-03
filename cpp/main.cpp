@@ -21,6 +21,7 @@
         render _ren;
         player _player;
         bad _bad;
+		_bad.loadConfig();
         SDL_Event e;
         
         _ren.createScreen(SCREEN_W, SCREEN_H);
