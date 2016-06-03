@@ -2,22 +2,25 @@
     #include <vector>
     #include <time.h>
     #include <math.h>
+    #include <fstream>
+    #include "/usr/include/jsoncpp/json/json.h"
     #include "constants"
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_image.h>
     #include "render.h"
     #include "player.h"
+    #include "bad.h"
     
     using namespace std;
 
-    int main() {
-		
+    int main() {		
         bool UP=false, DOWN=false, RIGHT=false, LEFT=false, FIRE=false;
         bool running = true;
         int frametime;
         
         render _ren;
         player _player;
+        bad _bad;
         SDL_Event e;
         
         _ren.createScreen(SCREEN_W, SCREEN_H);
@@ -56,9 +59,10 @@
             if(frametime < 10)SDL_Delay(Uint32(10-frametime)); 
 
             SDL_RenderClear(_ren.ren);
+            _bad.draw(_ren.ren, _bad);
 			_player.draw(_ren.ren, _player);
             SDL_RenderPresent(_ren.ren);
-
+			SDL_SetRenderDrawColor(_ren.ren, 0, 0, 0, 255 );
         }
         _ren.destroyEverything(_ren);
 

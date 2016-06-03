@@ -10,6 +10,7 @@ class player : public playerStructs {
 		void move(player &p, bool R, bool L, bool U, bool D) {
 			movePlayer(p.p1, R, L, U, D);
 			moveFire(p);
+			outOfRange(p);
 		}
 		void fire(player &p, bool F);
 		void changeWeapon(p &p1, int weapon) {
@@ -17,7 +18,7 @@ class player : public playerStructs {
 		}
 		void draw(SDL_Renderer *_ren, player p) {
 			drawPlayer(_ren, p.p1);
-			drawFire(_ren, p.vf1);
+			drawFire(_ren, p);
 		}
 		
 	private:
@@ -26,20 +27,26 @@ class player : public playerStructs {
 		
 		void drawPlayer(SDL_Renderer *_ren, p ply) {
 			SDL_Rect rect = {(int)ply.x,(int)ply.y,ply.w,ply.h};
-			SDL_RenderDrawRect(_ren, &rect);
+			SDL_SetRenderDrawColor(_ren, 155, 220, 255, 255 );
+			SDL_RenderFillRect(_ren, &rect);
 		}
-		void drawFire(SDL_Renderer *_ren, vector<pFire1> fire) {
-			for(int i=0; i<fire.size();i++) {
-				SDL_Rect rect = {(int)fire[i].x,(int)fire[i].y,fire[i].w,fire[i].h};
-				SDL_RenderDrawRect(_ren, &rect);
+		void drawFire(SDL_Renderer *_ren, player p) {
+			for(int i=0; i<p.vf1.size();i++) {
+				SDL_Rect rect = {(int)p.vf1[i].x,(int)p.vf1[i].y,p.vf1[i].w,p.vf1[i].h};
+				SDL_SetRenderDrawColor(_ren, 255, 0, 0, 255 );
+				SDL_RenderFillRect(_ren, &rect);
 			}
 		}
 		
-		void proveColision(p &ply) {
-			if(ply.x<0) { 				ply.x = 0; 					ply.vx = 0; }
-			if(ply.x+ply.w>SCREEN_W) { 	ply.x = SCREEN_W - ply.w;	ply.vx = 0; }
-			if(ply.y<0) { 				ply.y = 0;					ply.vy = 0; }
-			if(ply.y+ply.h>SCREEN_H) { 	ply.y = SCREEN_H - ply.h;	ply.vy = 0; }
+		void outOfRange(player &p) {
+			if(p.p1.x<0) { 					p.p1.x = 0; 					p.p1.vx = 0; }
+			if(p.p1.x+p.p1.w>SCREEN_W) { 	p.p1.x = SCREEN_W - p.p1.w;		p.p1.vx = 0; }
+			if(p.p1.y<0) { 					p.p1.y = 0;						p.p1.vy = 0; }
+			if(p.p1.y+p.p1.h>SCREEN_H) { 	p.p1.y = SCREEN_H - p.p1.h;		p.p1.vy = 0; }
+			
+			for(int i=0; i<p.vf1.size();i++) {
+				if(p.vf1[i].y < -10) p.vf1.erase(p.vf1.begin()+i);
+			}
 		}
 };
 
@@ -75,8 +82,6 @@ void player::movePlayer(p &ply, bool R, bool L, bool U, bool D) {
 	
 	ply.x += ply.vx;
 	ply.y += ply.vy;
-	
-	proveColision(ply);
 }
 
 void player::moveFire(player &p) {
