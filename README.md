@@ -9,3 +9,8 @@ IDE majue: geany
 
 fondo uapuek
 http://webtreats.mysitemyway.com/tileable-classic-nebula-space-patterns/
+
+
+JSON BAJATEKO
+
+apt-cache search json | grep cpp  (pakete 2)
