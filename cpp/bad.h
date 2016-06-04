@@ -9,14 +9,22 @@ class bad : public badStructs {
 	public:
 		void draw(SDL_Renderer *_ren, bad &b) {
 			b.createBad();
+			moveBad(_ren, b);
 			drawBad(_ren, b);
 		}
 		
 		
 	private:
+		void moveBad(SDL_Renderer *_ren, bad &b);
 		void drawBad(SDL_Renderer *_ren, bad &b);
 		
 };
+
+void bad::moveBad(SDL_Renderer *_ren, bad &b) {
+	for(int i=0; i<b.vb1.size();i++) {
+		b.vb1[i].y += 2;
+	}
+}
 
 void bad::drawBad(SDL_Renderer *_ren, bad &b) {
 	for(int i=0; i<b.vb1.size();i++) {

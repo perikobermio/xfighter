@@ -22,14 +22,14 @@ class badStructs {
 						badNext = atoi(key.c_str()) + tmp;
 						aBad = badConfig[item][key];
 					}
-						
 					for(int i=0;i<aBad.size();i++) {
-						if(aBad[i]["type"] == "1") {
-							double x = aBad[i]["w"].asDouble();
-							double y = aBad[i]["w"].asDouble();
-							int w = aBad[i]["w"].asInt();
-							int h = aBad[i]["h"].asInt();
-							vb1.push_back(bad1({x, y, w, h, 1}));
+						if(aBad[i]["type"] == 1) {
+							double x 		= aBad[i]["x"].asDouble();
+							double 	y 		= aBad[i]["y"].asDouble();
+							int 	w		= aBad[i]["w"].asInt();
+							int 	h		= aBad[i]["h"].asInt();
+							int 	move	= aBad[i]["move"].asInt();
+							vb1.push_back(bad1({x, y, w, h, move}));
 						}
 					}
 					++item;
