@@ -22,7 +22,14 @@ class bad : public badStructs {
 
 void bad::moveBad(SDL_Renderer *_ren, bad &b) {
 	for(int i=0; i<b.vb1.size();i++) {
-		b.vb1[i].y += 2;
+		switch(b.vb1[i].move) {
+			case 1:
+				b.vb1[i].y += 2;
+			break;
+			case 2:
+				b.vb1[i].y += 2;
+			break;
+		}
 	}
 }
 

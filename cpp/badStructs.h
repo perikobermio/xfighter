@@ -9,7 +9,7 @@ class badStructs {
 
 		struct bad1 {
 			double x,y;
-			int w,h,movements;
+			int w,h,move;
 		};
 		vector<bad1> vb1;
 		
@@ -24,7 +24,7 @@ class badStructs {
 					}
 					for(int i=0;i<aBad.size();i++) {
 						if(aBad[i]["type"] == 1) {
-							double x 		= aBad[i]["x"].asDouble();
+							double  x 		= aBad[i]["x"].asDouble();
 							double 	y 		= aBad[i]["y"].asDouble();
 							int 	w		= aBad[i]["w"].asInt();
 							int 	h		= aBad[i]["h"].asInt();
