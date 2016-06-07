@@ -27,7 +27,11 @@ void bad::moveBad(SDL_Renderer *_ren, bad &b) {
 				b.vb1[i].y += 2;
 			break;
 			case 2:
-				b.vb1[i].y += 2;
+				double v = sqrt(2*2 + 2*2);
+				double vy = v * sin(50*( M_PI / 180));
+				double vx = v * cos(50*( M_PI / 180));
+				b.vb1[i].x += vx;
+				b.vb1[i].y += vy;
 			break;
 		}
 	}
