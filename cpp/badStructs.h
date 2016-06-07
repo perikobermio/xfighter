@@ -8,7 +8,7 @@ class badStructs {
 	public:
 
 		struct bad1 {
-			double x,y;
+			double x,y,vx,vy;
 			int w,h,move;
 		};
 		vector<bad1> vb1;
@@ -29,7 +29,7 @@ class badStructs {
 							int 	w		= aBad[i]["w"].asInt();
 							int 	h		= aBad[i]["h"].asInt();
 							int 	move	= aBad[i]["move"].asInt();
-							vb1.push_back(bad1({x, y, w, h, move}));
+							vb1.push_back(bad1({x, y, 0, 0, w, h, move}));
 						}
 					}
 					++item;
