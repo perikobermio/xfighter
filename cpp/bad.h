@@ -29,14 +29,12 @@ void bad::moveBad(SDL_Renderer *_ren, bad &b) {
 			case 2:
 				if(b.vb1[i].vx == 0) {
 					double v = sqrt(2*2 + 2*2);
-					double vy = v * sin(15*( M_PI / 180));
-					double vx = v * cos(15*( M_PI / 180));
-					b.vb1[i].vx = vx;
-					b.vb1[i].vy = vy;
+					b.vb1[i].vx = v * sin(70*( M_PI / 180));
+					b.vb1[i].vy = v * cos(70*( M_PI / 180));
 				}
 				
-				if(b.vb1[i].x + b.vb1[i].vx > SCREEN_W) b.vb1[i].vx = b.vb1[i].vx*(-1);
-				if(b.vb1[i].x - b.vb1[i].vx < 0) 		b.vb1[i].vx = b.vb1[i].vx*(-1);
+				if(	b.vb1[i].x  + b.vb1[i].w + b.vb1[i].vx > SCREEN_W || b.vb1[i].x + b.vb1[i].vx < 0) 
+					b.vb1[i].vx = b.vb1[i].vx*(-1);
 				b.vb1[i].x += b.vb1[i].vx;
 				b.vb1[i].y += b.vb1[i].vy;
 			break;
