@@ -10,6 +10,7 @@
     #include "render.h"
     #include "player.h"
     #include "bad.h"
+    #include "collision.h"
     
     using namespace std;
 
@@ -21,6 +22,9 @@
         render _ren;
         player _player;
         bad _bad;
+        collision _collision;
+        
+        
 		_bad.loadConfig();
         SDL_Event e;
         
@@ -55,6 +59,7 @@
             //PLAYER
             _player.fire(_player, FIRE);
             _player.move(_player, RIGHT, LEFT, UP, DOWN);
+            _collision.detect(_player,_bad);
 
             frametime = SDL_GetTicks() - frametime;
             if(frametime < 10)SDL_Delay(Uint32(10-frametime)); 

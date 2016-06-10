@@ -17,7 +17,7 @@ class bad : public badStructs {
 	private:
 		void moveBad(SDL_Renderer *_ren, bad &b);
 		void drawBad(SDL_Renderer *_ren, bad &b);
-		
+		void outOfRange(vector<bad1> &v, int i);
 };
 
 void bad::moveBad(SDL_Renderer *_ren, bad &b) {
@@ -39,6 +39,7 @@ void bad::moveBad(SDL_Renderer *_ren, bad &b) {
 				b.vb1[i].y += b.vb1[i].vy;
 			break;
 		}
+		outOfRange(b.vb1, i);
 	}
 }
 
@@ -48,6 +49,11 @@ void bad::drawBad(SDL_Renderer *_ren, bad &b) {
 		SDL_SetRenderDrawColor(_ren, 0, 255, 0, 255 );
 		SDL_RenderFillRect(_ren, &rect);
 	}
+}
+
+void bad::outOfRange(vector<bad1> &v, int i) {
+	if(v[i].y>SCREEN_H)
+		v.erase(v.begin()+i);
 }
 
 #endif
